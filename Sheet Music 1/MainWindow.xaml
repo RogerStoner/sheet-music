@@ -6,7 +6,45 @@
         xmlns:local="clr-namespace:Sheet_Music_1"
         mc:Ignorable="d"
         Title="Sheet Music" Height="350" Width="525">
+    <Window.Resources>
+        <Style x:Key="TextBoxStyle"
+                   TargetType="TextBox">
+            <Setter Property="Margin"
+                        Value="10"/>
+            <Setter Property="Padding"
+                        Value="5"/>
+            <Setter Property="VerticalAlignment"
+                    Value="Center"/>
+        </Style>
+        <Style x:Key="ButtonStyle"
+                   TargetType="Button">
+            <Setter Property="Margin"
+                        Value="10"/>
+            <Setter Property="Padding"
+                        Value="40, 0"/>
+        </Style>
+    </Window.Resources>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto">               
+            </RowDefinition>
+        </Grid.RowDefinitions>
+        <GroupBox Header="Enter Song Title"
+                  Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Name="SongName"
+                         Text="Type The Title Here"
+                         Style="{StaticResource TextBoxStyle}">
+                </TextBox>
+                <Button  Content="Ok"
+                         Style="{StaticResource ButtonStyle}"/>
+
+            </Grid>
+
+        </GroupBox>
     </Grid>
 </Window>
