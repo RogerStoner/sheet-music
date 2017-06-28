@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sheet_Music_1"
         mc:Ignorable="d"
+        Name="thisWindow"
+        DataContext="{Binding ElementName=thisWindow}"
         Title="Sheet Music" Height="350" Width="525">
     <Window.Resources>
         <Style x:Key="TextBoxStyle"
@@ -26,25 +28,75 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto">               
-            </RowDefinition>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <GroupBox Header="Enter Song Title"
-                  Grid.Row="1">
+        <GroupBox Header="Search Song Title"
+                  Grid.Row="0"
+                  Grid.Column="0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
+                    <ColumnDefinition />
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBox Name="SongName"
-                         Text="Type The Title Here"
-                         Style="{StaticResource TextBoxStyle}">
-                </TextBox>
+                <TextBox Text="{Binding SongTitle, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource TextBoxStyle}"
+                         GotFocus="TextBox_GotFocus"/>
                 <Button  Content="Ok"
-                         Style="{StaticResource ButtonStyle}"/>
-
+                         Style="{StaticResource ButtonStyle}"
+                         Grid.Column="1"
+                         Click="Button_Click"
+                         IsDefault="True"/>
             </Grid>
-
         </GroupBox>
-    </Grid>
+        <GroupBox Header="Search Composer"
+                  Grid.Row="1"
+                  Grid.Column="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBox Name="Composer"
+					    Text="{Binding Composer, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource TextBoxStyle}"
+                        Grid.Column="0"
+                        Grid.Row="2"
+                        GotFocus="TextBox_GotFocus"/>
+                <Button Content="Ok"
+                        Style="{StaticResource ButtonStyle}"
+                        Grid.Column="1"
+                        Grid.Row="2"
+                        Click="Button_Click"
+                        IsDefault="True"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Search Lyricist"
+                Grid.Row="2"
+                Grid.Column="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBox Name="Writer"
+					    Text="{Binding Writer, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource TextBoxStyle}"
+                        Grid.Column="0"
+                        Grid.Row="1"
+                        GotFocus="TextBox_GotFocus"/>
+                <Button Content="Ok"
+                        Style="{StaticResource ButtonStyle}"
+                        Grid.Column="1"
+                        Grid.Row="2"
+                        GotFocus="TextBox_GotFocus"
+                        Click="Button_Click"
+                        IsDefault="True"/>
+            </Grid>
+        </GroupBox>
+
+    </Grid>  
 </Window>
