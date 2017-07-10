@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Name="thisWindow"
         DataContext="{Binding ElementName=thisWindow}"
-        Title="Sheet Music" Height="350" Width="525">
+        Title="Sheet Music" Height="486.52" Width="525">
     <Window.Resources>
         <Style x:Key="TextBoxStyle"
                    TargetType="TextBox">
@@ -32,6 +32,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition />
         </Grid.RowDefinitions>
         <GroupBox Header="Search Song Title"
                   Grid.Row="0"
@@ -42,7 +43,8 @@
                     <ColumnDefinition />
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBox Text="{Binding SongTitle, UpdateSourceTrigger=PropertyChanged}"
+                <TextBox Name="Title" 
+                        Text="{Binding SongTitle, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource TextBoxStyle}"
                          GotFocus="TextBox_GotFocus"/>
                 <Button  Content="Ok"
@@ -70,8 +72,8 @@
                         Style="{StaticResource ButtonStyle}"
                         Grid.Column="1"
                         Grid.Row="2"
-                        Click="Button_Click"
-                        IsDefault="True"/>
+                        IsDefault="True"
+                        Click="Button_Click_1"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Search Lyricist"
@@ -92,11 +94,38 @@
                         Style="{StaticResource ButtonStyle}"
                         Grid.Column="1"
                         Grid.Row="2"
-                        GotFocus="TextBox_GotFocus"
-                        Click="Button_Click"
+                        Click="Button_Click_2"
                         IsDefault="True"/>
             </Grid>
         </GroupBox>
-
+        <GroupBox Header="Search First Line"
+                  Grid.Row="3"
+                  Grid.Column="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBox Name="FirstLine"
+                         Text="{Binding FirstLine, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource TextBoxStyle}"
+                         Grid.Column="0"
+                         Grid.Row="1"
+                         GotFocus="TextBox_GotFocus"/>
+                <Button Content="Ok"
+                        Style="{StaticResource ButtonStyle}"
+                        Grid.Column="1"
+                        Grid.Row="2"
+                        Click="Button_Click_3"
+                        IsDefault="True"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Results"
+            Grid.Row="4">
+            <DataGrid Name="dataGrid"
+                      AutoGenerateColumns="True"
+                      IsReadOnly="True"
+                      MouseDoubleClick="dataGrid_MouseDoubleClick"/>
+        </GroupBox>
     </Grid>  
 </Window>
