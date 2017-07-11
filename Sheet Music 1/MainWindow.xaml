@@ -50,7 +50,7 @@
                 <Button  Content="Ok"
                          Style="{StaticResource ButtonStyle}"
                          Grid.Column="1"
-                         Click="Button_Click"
+                         Click="TitleSearch"
                          IsDefault="True"/>
             </Grid>
         </GroupBox>
@@ -66,14 +66,12 @@
 					    Text="{Binding Composer, UpdateSourceTrigger=PropertyChanged}"
                         Style="{StaticResource TextBoxStyle}"
                         Grid.Column="0"
-                        Grid.Row="2"
-                        GotFocus="TextBox_GotFocus"/>
+                        Grid.Row="2"/>
                 <Button Content="Ok"
                         Style="{StaticResource ButtonStyle}"
                         Grid.Column="1"
                         Grid.Row="2"
-                        IsDefault="True"
-                        Click="Button_Click_1"/>
+                        Click="ComposerSearch"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Search Lyricist"
@@ -88,14 +86,12 @@
 					    Text="{Binding Writer, UpdateSourceTrigger=PropertyChanged}"
                         Style="{StaticResource TextBoxStyle}"
                         Grid.Column="0"
-                        Grid.Row="1"
-                        GotFocus="TextBox_GotFocus"/>
+                        Grid.Row="1"/>
                 <Button Content="Ok"
                         Style="{StaticResource ButtonStyle}"
                         Grid.Column="1"
                         Grid.Row="2"
-                        Click="Button_Click_2"
-                        IsDefault="True"/>
+                        Click="Button_Click_2"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Search First Line"
@@ -110,14 +106,12 @@
                          Text="{Binding FirstLine, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource TextBoxStyle}"
                          Grid.Column="0"
-                         Grid.Row="1"
-                         GotFocus="TextBox_GotFocus"/>
+                         Grid.Row="1"/>
                 <Button Content="Ok"
                         Style="{StaticResource ButtonStyle}"
                         Grid.Column="1"
                         Grid.Row="2"
-                        Click="Button_Click_3"
-                        IsDefault="True"/>
+                        Click="Button_Click_3"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Results"

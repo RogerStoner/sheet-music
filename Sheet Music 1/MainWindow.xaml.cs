@@ -38,48 +38,9 @@ namespace Sheet_Music_1
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void TitleSearch(object sender, RoutedEventArgs e)
         {
-            //ImportFiles();
-            //return;
-            DataTable Results = new DataTable();
-            Results.Clear();
-            using (var con = new NpgsqlConnection("Server=127.0.0.1;Port=5432;Database=Sheet Music;User Id=postgres;Password=Roger;"))
-            {
-                con.Open();
-                using (var cmd = new NpgsqlCommand("Select * FROM pdfs_from_pfp WHERE Song ILIKE @Parameter1", con))
-                {
-                    cmd.Parameters.AddWithValue("@Parameter1", "%"+SongTitle+"%");
-                    using (var reader = cmd.ExecuteReader())
-                    {
-                        bool foundSong = false;
-                        while (reader.Read())
-                        {
-                            foundSong = true;
-			                if (Results.Columns.Count == 0)
-			                {
-    				            for (int i = 0; i < reader.FieldCount; i++)
-				                {
-				                    Results.Columns.Add(reader.GetName(i));
-				                }
-			                }
-			                DataRow dr = Results.NewRow();
-			                for (int i = 0; i < reader.FieldCount; i++)
-			                {
-	    			            dr[i] = reader.GetValue(i);
-			                }
-			                Results.Rows.Add(dr);
-
-                        }
-                        if (foundSong ==false)
-                        {
-                            MessageBox.Show("Song Not Found!");
-                        }
-                    }
-                }
-                con.Close();
-            }
-            dataGrid.ItemsSource = Results.DefaultView;
+            Search("Select * FROM pdfs_from_pfp WHERE Song ILIKE @Parameter1", SongTitle);
         }
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
@@ -88,48 +49,83 @@ namespace Sheet_Music_1
                 SongTitle = string.Empty;
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void ComposerSearch(object sender, RoutedEventArgs e)
         {
+            Search("SELECT * FROM pdfs_from_pfp WHERE Music ILIKE @Parameter1", Composer.Text);
+        }
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            DataTable Results = new DataTable();
+            Results.Clear();
             using (var con = new NpgsqlConnection("Server=127.0.0.1;Port=5432;Database=Sheet Music;User Id=postgres;Password=Roger;"))
-            {
-                con.Open();
-                using (var cmd = new NpgsqlCommand("Select * FROM pdfs_from_pfp WHERE first_line ILIKE @Parameter2", con))
                 {
-                    cmd.Parameters.AddWithValue("@Parameter2", "%" + Composer + "%");
-                    using (var reader = cmd.ExecuteReader())
+                    con.Open();
+                    using (var cmd = new NpgsqlCommand("Select * FROM pdfs_from_pfp WHERE words ILIKE @Parameter3", con))
                     {
+                        cmd.Parameters.AddWithValue("@Parameter3", "%" + Writer + "%");
+                        using (var reader = cmd.ExecuteReader())
+                        {
                         bool foundSong = false;
                         while (reader.Read())
                         {
                             foundSong = true;
-                            MessageBox.Show(reader.GetString(0));
+                            if (Results.Columns.Count == 0)
+                            {
+                                for (int i = 0; i < reader.FieldCount; i++)
+                                {
+                                    Results.Columns.Add(reader.GetName(i));
+                                }
+                            }
+                            DataRow dr = Results.NewRow();
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                dr[i] = reader.GetValue(i);
+                            }
+                            Results.Rows.Add(dr);
+
                         }
                         if (foundSong == false)
                         {
                             MessageBox.Show("Song Not Found!");
                         }
                     }
-                    con.Close();
-
+                        con.Close();
+                    }
                 }
-            }
-
+            dataGrid.ItemsSource = Results.DefaultView;
         }
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
         {
+            {
+                DataTable Results = new DataTable();
+                Results.Clear();
                 using (var con = new NpgsqlConnection("Server=127.0.0.1;Port=5432;Database=Sheet Music;User Id=postgres;Password=Roger;"))
                 {
                     con.Open();
-                    using (var cmd = new NpgsqlCommand("Select * FROM pdfs_from_pfp WHERE Song ILIKE @Parameter3", con))
+                    using (var cmd = new NpgsqlCommand("Select * FROM pdfs_from_pfp WHERE first_line ILIKE @Parameter4", con))
                     {
-                        cmd.Parameters.AddWithValue("@Parameter3", "%" + Writer + "%");
+                        cmd.Parameters.AddWithValue("@Parameter4", "%" + FirstLine + "%");
                         using (var reader = cmd.ExecuteReader())
                         {
                             bool foundSong = false;
                             while (reader.Read())
                             {
                                 foundSong = true;
-                                MessageBox.Show(reader.GetString(0));
+                                if (Results.Columns.Count == 0)
+                                {
+                                    for (int i = 0; i < reader.FieldCount; i++)
+                                    {
+                                        Results.Columns.Add(reader.GetName(i));
+                                    }
+                                }
+                                DataRow dr = Results.NewRow();
+                                for (int i = 0; i < reader.FieldCount; i++)
+                                {
+                                    dr[i] = reader.GetValue(i);
+                                }
+                                Results.Rows.Add(dr);
+
                             }
                             if (foundSong == false)
                             {
@@ -137,18 +133,15 @@ namespace Sheet_Music_1
                             }
                         }
                         con.Close();
-
                     }
                 }
+                dataGrid.ItemsSource = Results.DefaultView;
             }
-
-        private void Button_Click_3(object sender, RoutedEventArgs e)
-        {
-            var Files = Directory.EnumerateFiles(@"C:\Users\Roger\Documents\Visual Studio 2017\Projects\Sheet Music 1\Pdf bin\", "*.pdf");
-            foreach (var item in Files)
-            {
-                MessageBox.Show(item);
-            }
+            //var Files = Directory.EnumerateFiles(@"C:\Users\Roger\Documents\Visual Studio 2017\Projects\Sheet Music 1\Pdf bin\", "*.pdf");
+            //foreach (var item in Files)
+            //{
+            //   // dataGrid;
+            //}
         }
 
         private void dataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -157,5 +150,48 @@ namespace Sheet_Music_1
             
             System.Diagnostics.Process.Start(@"C:\Users\Roger\Documents\Visual Studio 2017\Projects\Sheet Music 1\Pdf bin\" + row["song"] + ".pdf");
         }
+
+        private void Search(string query, string param1)
+        {
+            DataTable Results = new DataTable();
+            Results.Clear();
+            using (var con = new NpgsqlConnection("Server=127.0.0.1;Port=5432;Database=Sheet Music;User Id=postgres;Password=Roger;"))
+            {
+                con.Open();
+                using (var cmd = new NpgsqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@Parameter1", "%" + param1 + "%");
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        bool foundSong = false;
+                        while (reader.Read())
+                        {
+                            foundSong = true;
+                            if (Results.Columns.Count == 0)
+                            {
+                                for (int i = 0; i < reader.FieldCount; i++)
+                                {
+                                    Results.Columns.Add(reader.GetName(i));
+                                }
+                            }
+                            DataRow dr = Results.NewRow();
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                dr[i] = reader.GetValue(i);
+                            }
+                            Results.Rows.Add(dr);
+
+                        }
+                        if (foundSong == false)
+                        {
+                            MessageBox.Show("No Songs Found!");
+                        }
+                    }
+                }
+                con.Close();
+            }
+            dataGrid.ItemsSource = Results.DefaultView;
+        }
+
     }
 }
