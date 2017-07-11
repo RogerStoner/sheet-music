@@ -144,23 +144,18 @@ namespace Sheet_Music_1
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-
+            var Files = Directory.EnumerateFiles(@"C:\Users\Roger\Documents\Visual Studio 2017\Projects\Sheet Music 1\Pdf bin\", "*.pdf");
+            foreach (var item in Files)
+            {
+                MessageBox.Show(item);
+            }
         }
 
         private void dataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            System.Diagnostics.Process.Start(@"c:Documents\Visual Studio 2017\Projects\Sheet Music 1\Pdf bin\*.pdf");
+            var row = dataGrid.SelectedItem as DataRowView;
+            
+            System.Diagnostics.Process.Start(@"C:\Users\Roger\Documents\Visual Studio 2017\Projects\Sheet Music 1\Pdf bin\" + row["song"] + ".pdf");
         }
     }
-
-
-        // private void ImportFiles()
-        // {
-        // var Files = Directory.EnumerateFiles(@"c:\pdfs\", "*.pdf");
-        //  foreach (var item in Files)
-        // {
-        //     MessageBox.Show(item);
-
-        //  }
-        //  }
 }
